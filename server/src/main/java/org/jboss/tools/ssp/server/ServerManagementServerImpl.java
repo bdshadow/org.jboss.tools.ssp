@@ -89,47 +89,7 @@ public class ServerManagementServerImpl implements SSPServer {
 		return model;
 	}
 	
-	/*
-	 * Some methods for adding or removing VMs
-	 */
-	
-//	/**
-//	 * Get a list of VMs currently registered
-//	 * @return
-//	 */
-//	@Override
-//	public CompletableFuture<List<VMDescription>> getVMs() {
-//		IVMInstall[] arr = VMInstallModel.getDefault().getVMs();
-//		VMDescription[] vmd = new VMDescription[arr.length];
-//		for( int i = 0; i < arr.length; i++ ) {
-//			vmd[i] = getDescription(arr[i]);
-//		}
-//		return CompletableFuture.completedFuture(Arrays.asList(vmd));
-//	}
-//	
-//	private VMDescription getDescription(IVMInstall vmi) {
-//		String vers = vmi instanceof IVMInstall2 ? ((IVMInstall2)vmi).getJavaVersion() : null;
-//		return new VMDescription(vmi.getId(), vmi.getInstallLocation().getAbsolutePath(), vers);
-//	}
-//	
-//	@Override
-//	public void addVM(VMDescription desc) {
-//		
-//		try {
-//			IVMInstall vmi = StandardVMType.getDefault().createVMInstall(desc.getId());
-//			vmi.setInstallLocation(new File(desc.getInstallLocation()));
-//			VMInstallModel.getDefault().addVMInstall(vmi);
-//		} catch(IllegalArgumentException arg) {
-//			LaunchingCore.log(arg);
-//		}
-//	}
-//
-//	@Override
-//	public void removeVM(VMHandle handle) {
-//		VMInstallModel.getDefault().removeVMInstall(handle.getId());
-//	}
-//
-//	
+
 	
 	/**
 	 * Return existing messages.
@@ -154,11 +114,14 @@ public class ServerManagementServerImpl implements SSPServer {
 
 	@Override
 	public CompletableFuture<List<ServerBean>> findServerBeans(DiscoveryPath path) {
-		ServerBeanLoader loader = new ServerBeanLoader(new File(path.getFilepath()));
-		ServerBean bean = loader.getServerBean();
-		List<ServerBean> ret = new ArrayList<>();
-		ret.add(bean);
-		return CompletableFuture.completedFuture(ret);
+		if( model.getDiscoveryPathModel().containsPath(path)) {
+			ServerBeanLoader loader = new ServerBeanLoader(new File(path.getFilepath()));
+			ServerBean bean = loader.getServerBean();
+			List<ServerBean> ret = new ArrayList<>();
+			ret.add(bean);
+			return CompletableFuture.completedFuture(ret);
+		}
+		return CompletableFuture.completedFuture(new ArrayList<ServerBean>());
 	}
 
 	@Override

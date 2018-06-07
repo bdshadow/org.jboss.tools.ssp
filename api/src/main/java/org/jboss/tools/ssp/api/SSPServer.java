@@ -51,6 +51,11 @@ public interface SSPServer {
 	 * underlying the discovery path. Any providers that claim to be able to handle
 	 * the given path will return an object representing the details of this
 	 * recognized server runtime, its version, etc.
+	 * 
+	 * If the DiscoveryPath parameter does not already exist in the model, 
+	 * this method will return an empty list.
+	 * 
+	 *  TODO:  Throw an exception? Still unsure about error handling here
 	 */
 	@JsonRequest
 	CompletableFuture<List<ServerBean>> findServerBeans(DiscoveryPath path);

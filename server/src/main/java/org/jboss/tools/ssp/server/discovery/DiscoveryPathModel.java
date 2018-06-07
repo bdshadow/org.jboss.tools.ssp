@@ -56,4 +56,21 @@ public class DiscoveryPathModel implements IDiscoveryPathModel {
 		}
 	}
 
+	private boolean stringSafeEquals(String s1, String s2) {
+		if( s1 == null )
+			return s1 == s2;
+		else
+			return s1.equals(s2);
+	}
+	
+	@Override
+	public boolean containsPath(DiscoveryPath path) {
+		for( DiscoveryPath dp : getPaths()) {
+			if( dp.getFilepath().equals(path.getFilepath())) {
+				return stringSafeEquals(dp.getFilepath(), path.getFilepath());
+			}
+		}
+		return false;
+	}
+
 }
