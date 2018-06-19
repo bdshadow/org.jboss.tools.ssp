@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.jboss.tools.ssp.api.IServerManagementClient;
 import org.jboss.tools.ssp.api.SSPClient;
 import org.jboss.tools.ssp.api.SocketLauncher;
 import org.jboss.tools.ssp.server.spi.model.IServerManagementModel;
@@ -43,7 +44,7 @@ public class ServerManagementServerLauncher {
 		return serverImpl.getModel();
 	}
 	
-	public List<SSPClient> getClients() {
+	public List<IServerManagementClient> getClients() {
 		return serverImpl.getClients();
 	}
 	
@@ -102,8 +103,8 @@ public class ServerManagementServerLauncher {
 			// wait for clients to connect
 			Socket socket = serverSocket.accept();
 			// create a JSON-RPC connection for the accepted socket
-			SocketLauncher<SSPClient> launcher = new SocketLauncher<>(server,
-					SSPClient.class, socket);
+			SocketLauncher<IServerManagementClient> launcher = new SocketLauncher<>(server,
+					IServerManagementClient.class, socket);
 			// connect a remote client proxy to the server
 			Runnable removeClient = server.addClient(launcher);
 			/*
@@ -140,9 +141,9 @@ public class ServerManagementServerLauncher {
 	}
 
 	private void closeAllConnections() {
-		List<SocketLauncher<SSPClient>> all = 
+		List<SocketLauncher<IServerManagementClient>> all =
 				serverImpl.getActiveLaunchers();
-		for( SocketLauncher<SSPClient> i : all ) {
+		for( SocketLauncher<? extends SSPClient> i : all ) {
 			i.close();
 		}
 	}

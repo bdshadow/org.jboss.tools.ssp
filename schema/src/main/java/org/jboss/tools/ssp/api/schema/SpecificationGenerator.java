@@ -34,13 +34,13 @@ public class SpecificationGenerator {
 	
 	private static File getClientInterfaceFile() throws IOException {
 		File f2 = new File(".");
-		File f = new File(f2, "../api/src/main/java/org/jboss/tools/ssp/api/SSPClient.java").getCanonicalFile();
+		File f = new File(f2, "../api/src/main/java/org/jboss/tools/ssp/api/IServerManagementClient.java").getCanonicalFile();
 		return f;
 	}
 
 	private static File getServerInterfaceFile() throws IOException {
 		File f2 = new File(".");
-		File f = new File(f2, "../api/src/main/java/org/jboss/tools/ssp/api/SSPServer.java").getCanonicalFile();
+		File f = new File(f2, "../api/src/main/java/org/jboss/tools/ssp/api/IServerManagementServer.java").getCanonicalFile();
 		return f;
 	}
 

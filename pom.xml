@@ -14,7 +14,6 @@
 	  <module>api</module>
 	  <module>schema</module>
 	  <module>client-cli</module>
-	  <module>launching</module>
 	  <module>server-spi</module>
 	  <module>server</module>
 	  <module>server-wildfly</module>

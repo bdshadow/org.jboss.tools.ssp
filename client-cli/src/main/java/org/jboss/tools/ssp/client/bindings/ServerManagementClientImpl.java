@@ -11,27 +11,17 @@ package org.jboss.tools.ssp.client.bindings;
  * Licensed under the MIT License. See License.txt in the project root for license information.
  * ------------------------------------------------------------------------------------------ */
 
-import org.jboss.tools.ssp.api.SSPClient;
-import org.jboss.tools.ssp.api.SSPServer;
+import org.jboss.tools.ssp.api.IServerManagementClient;
+import org.jboss.tools.ssp.api.IServerManagementServer;
 import org.jboss.tools.ssp.api.ServerManagementAPIConstants;
 import org.jboss.tools.ssp.api.dao.DiscoveryPath;
 import org.jboss.tools.ssp.api.dao.ServerHandle;
 import org.jboss.tools.ssp.api.dao.ServerProcess;
 import org.jboss.tools.ssp.api.dao.ServerProcessOutput;
 import org.jboss.tools.ssp.api.dao.ServerStateChange;
+import org.jboss.tools.ssp.api.impl.AbstractSSPClient;
 
-public class ServerManagementClientImpl implements SSPClient {
-	
-	public SSPServer server;
-	
-	
-	public void initialize(SSPServer server) throws Exception {
-		this.server = server;
-	}
-
-	public SSPServer getProxy() {
-		return server;
-	}
+public class ServerManagementClientImpl extends AbstractSSPClient implements IServerManagementClient {
 
 	@Override
 	public void discoveryPathAdded(DiscoveryPath message) {

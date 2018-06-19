@@ -17,7 +17,7 @@ import org.jboss.tools.ssp.api.dao.ServerProcessOutput;
 import org.jboss.tools.ssp.api.dao.ServerStateChange;
 
 @JsonSegment("client")
-public interface SSPClient {
+public interface IServerManagementClient extends SSPClient {
 
 	/**
 	 * The `client/discoveryPathAdded` notification is sent by the server to all

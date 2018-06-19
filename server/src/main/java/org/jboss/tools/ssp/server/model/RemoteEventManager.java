@@ -10,7 +10,7 @@ package org.jboss.tools.ssp.server.model;
 
 import java.util.List;
 
-import org.jboss.tools.ssp.api.SSPClient;
+import org.jboss.tools.ssp.api.IServerManagementClient;
 import org.jboss.tools.ssp.api.dao.DiscoveryPath;
 import org.jboss.tools.ssp.api.dao.ServerHandle;
 import org.jboss.tools.ssp.api.dao.ServerProcess;
@@ -34,15 +34,15 @@ public class RemoteEventManager implements IDiscoveryPathListener, IVMInstallCha
 	}
 	@Override
 	public void discoveryPathAdded(DiscoveryPath path) {
-		List<SSPClient> l = server.getClients();
-		for( SSPClient c : l) {
+		List<IServerManagementClient> l = server.getClients();
+		for( IServerManagementClient c : l) {
 			c.discoveryPathAdded(path);
 		}
 	}
 	@Override
 	public void discoveryPathRemoved(DiscoveryPath path) {
-		List<SSPClient> l = server.getClients();
-		for( SSPClient c : l) {
+		List<IServerManagementClient> l = server.getClients();
+		for( IServerManagementClient c : l) {
 			c.discoveryPathRemoved(path);
 		}
 	}
@@ -55,29 +55,29 @@ public class RemoteEventManager implements IDiscoveryPathListener, IVMInstallCha
 	
 	@Override
 	public void vmAdded(IVMInstall vm) {
-//		List<SSPClient> l = server.getClients();
-//		for( SSPClient c : l) {
+//		List<IServerManagementClient> l = server.getClients();
+//		for( IServerManagementClient c : l) {
 //			c.vmAdded(getDescription(vm));
 //		}
 	}
 	@Override
 	public void vmRemoved(IVMInstall vm) {
-//		List<SSPClient> l = server.getClients();
-//		for( SSPClient c : l) {
+//		List<IServerManagementClient> l = server.getClients();
+//		for( IServerManagementClient c : l) {
 //			c.vmRemoved(getDescription(vm));
 //		}
 	}
 
 	public void serverAdded(ServerHandle server2) {
-		List<SSPClient> l = server.getClients();
-		for( SSPClient c : l) {
+		List<IServerManagementClient> l = server.getClients();
+		for( IServerManagementClient c : l) {
 			c.serverAdded(server2);
 		}
 	}
 	
 	public void serverRemoved(ServerHandle server2) {
-		List<SSPClient> l = server.getClients();
-		for( SSPClient c : l) {
+		List<IServerManagementClient> l = server.getClients();
+		for( IServerManagementClient c : l) {
 			c.serverRemoved(server2);
 		}
 	}
@@ -87,29 +87,29 @@ public class RemoteEventManager implements IDiscoveryPathListener, IVMInstallCha
 	}
 	
 	public void serverStateChanged(ServerHandle server, int state) {
-		List<SSPClient> l = this.server.getClients();
-		for( SSPClient c : l) {
+		List<IServerManagementClient> l = this.server.getClients();
+		for( IServerManagementClient c : l) {
 			c.serverStateChanged(new ServerStateChange(server, state));
 		}
 	}
 	
 	public void serverProcessCreated(ServerHandle server, String processId) {
-		List<SSPClient> l = this.server.getClients();
-		for( SSPClient c : l) {
+		List<IServerManagementClient> l = this.server.getClients();
+		for( IServerManagementClient c : l) {
 			c.serverProcessCreated(new ServerProcess(server, processId));
 		}
 	}
 	
 	public void serverProcessTerminated(ServerHandle server, String processId) {
-		List<SSPClient> l = this.server.getClients();
-		for( SSPClient c : l) {
+		List<IServerManagementClient> l = this.server.getClients();
+		for( IServerManagementClient c : l) {
 			c.serverProcessTerminated(new ServerProcess(server, processId));
 		}
 	}
 	
 	public void serverProcessOutputAppended(ServerHandle server, String processId, int streamType, String text) {
-		List<SSPClient> l = this.server.getClients();
-		for( SSPClient c : l) {
+		List<IServerManagementClient> l = this.server.getClients();
+		for( IServerManagementClient c : l) {
 			c.serverProcessOutputAppended(new ServerProcessOutput(
 					server, processId, streamType, text));
 		}

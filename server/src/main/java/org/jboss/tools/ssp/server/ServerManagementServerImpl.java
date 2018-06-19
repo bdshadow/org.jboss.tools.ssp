@@ -16,8 +16,9 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import org.jboss.tools.ssp.api.IServerManagementClient;
+import org.jboss.tools.ssp.api.IServerManagementServer;
 import org.jboss.tools.ssp.api.SSPClient;
-import org.jboss.tools.ssp.api.SSPServer;
 import org.jboss.tools.ssp.api.SocketLauncher;
 import org.jboss.tools.ssp.api.dao.Attributes;
 import org.jboss.tools.ssp.api.dao.CommandLineDetails;
@@ -31,8 +32,8 @@ import org.jboss.tools.ssp.api.dao.ServerStartingAttributes;
 import org.jboss.tools.ssp.api.dao.ServerType;
 import org.jboss.tools.ssp.api.dao.Status;
 import org.jboss.tools.ssp.api.dao.StopServerAttributes;
+import org.jboss.tools.ssp.api.impl.AbstractSSPServer;
 import org.jboss.tools.ssp.eclipse.core.runtime.IStatus;
-import org.jboss.tools.ssp.eclipse.jdt.launching.VMInstallRegistry;
 import org.jboss.tools.ssp.server.core.internal.StatusConverter;
 import org.jboss.tools.ssp.server.discovery.serverbeans.ServerBeanLoader;
 import org.jboss.tools.ssp.server.model.RemoteEventManager;
@@ -41,10 +42,7 @@ import org.jboss.tools.ssp.server.spi.model.IServerManagementModel;
 import org.jboss.tools.ssp.server.spi.servertype.IServer;
 import org.jboss.tools.ssp.server.spi.servertype.IServerDelegate;
 
-public class ServerManagementServerImpl implements SSPServer {
-	
-	private final List<SSPClient> clients = new CopyOnWriteArrayList<>();
-	private final List<SocketLauncher<SSPClient>> launchers = new CopyOnWriteArrayList<>();
+public class ServerManagementServerImpl extends AbstractSSPServer<IServerManagementClient> implements IServerManagementServer {
 	
 	private final ServerManagementModel model;
 	private final RemoteEventManager eventManager;
@@ -54,31 +52,6 @@ public class ServerManagementServerImpl implements SSPServer {
 		this.launcher = launcher;
 		model = new ServerManagementModel();
 		eventManager = new RemoteEventManager(this);
-	}
-	
-	public List<SSPClient> getClients() {
-		return new ArrayList<SSPClient>(clients);
-	}
-	
-	/**
-	 * Connect the given chat client.
-     * Return a runnable which should be executed to disconnect the client.
-	 */
-	public Runnable addClient(SocketLauncher<SSPClient> launcher) {
-		this.launchers.add(launcher);
-		SSPClient client = launcher.getRemoteProxy();
-		this.clients.add(client);
-		return () -> this.removeClient(launcher);
-	}
-
-	private void removeClient(SocketLauncher<SSPClient> launcher) {
-		this.launchers.add(launcher);
-		this.clients.remove(launcher.getRemoteProxy());
-		
-	}
-	
-	public List<SocketLauncher<SSPClient>> getActiveLaunchers() {
-		return new ArrayList<SocketLauncher<SSPClient>>(launchers);
 	}
 	
 	public IServerManagementModel getModel() {

@@ -28,7 +28,7 @@ import org.jboss.tools.ssp.api.dao.Status;
 import org.jboss.tools.ssp.api.dao.StopServerAttributes;
 
 @JsonSegment("server")
-public interface SSPServer {
+public interface IServerManagementServer extends SSPServer<IServerManagementClient> {
 
 	/**
 	 * The `server/getDiscoveryPaths` request is sent by the client to fetch a list

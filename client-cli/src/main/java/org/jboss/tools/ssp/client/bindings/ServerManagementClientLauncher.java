@@ -10,7 +10,7 @@ package org.jboss.tools.ssp.client.bindings;
 
 import java.net.Socket;
 
-import org.jboss.tools.ssp.api.SSPServer;
+import org.jboss.tools.ssp.api.IServerManagementServer;
 import org.jboss.tools.ssp.api.SocketLauncher;
 
 public class ServerManagementClientLauncher {
@@ -22,7 +22,7 @@ public class ServerManagementClientLauncher {
 	
 	
 	private ServerManagementClientImpl myClient;
-	private SocketLauncher<SSPServer> launcher;
+	private SocketLauncher<IServerManagementServer> launcher;
 	private Socket socket;
 	private String host;
 	private int port;
@@ -38,7 +38,7 @@ public class ServerManagementClientLauncher {
 		// connect to the server
 		this.socket = new Socket(host, port);
 		// open a JSON-RPC connection for the opened socket
-		this.launcher = new SocketLauncher<>(client, SSPServer.class, socket);
+		this.launcher = new SocketLauncher<>(client, IServerManagementServer.class, socket);
 		/*
          * Start listening for incoming message.
          * When the JSON-RPC connection is closed, 
@@ -71,9 +71,9 @@ public class ServerManagementClientLauncher {
 		return connectionOpen;
 	}
 	
-	public SSPServer getServerProxy() {
+	public IServerManagementServer getServerProxy() {
 		if( myClient != null ) {
-			return myClient.getProxy();
+			return (IServerManagementServer)myClient.getProxy();
 		}
 		return null;
 	}

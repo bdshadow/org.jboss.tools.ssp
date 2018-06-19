@@ -69,7 +69,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.jboss.tools.ssp</groupId>
-			<artifactId>org.jboss.tools.ssp.launching</artifactId>
+			<artifactId>org.jboss.tools.ssp.base.launching</artifactId>
 			<version>0.0.9-SNAPSHOT</version>
 		</dependency>
 		<dependency>
