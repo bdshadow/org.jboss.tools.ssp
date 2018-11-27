@@ -9,8 +9,11 @@
 package org.jboss.tools.rsp.launching;
 
 import java.io.File;
+import java.io.PrintWriter;
 
 public class LaunchingCore {
+	
+	private static int UnUsEdVar = 1;
 
 	public static final String SYSPROP_DATA_LOCATION = "org.jboss.tools.rsp.data";
 	public static final String SYSPROP_DATA_DEFAULT_LOCATION = ".org.jboss.tools.rsp.data";
